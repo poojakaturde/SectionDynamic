@@ -1,0 +1,45 @@
+.header {
+    background-color: rgb(227, 109, 66);
+    height: 90px;
+    text-align: center;
+    padding-top: 20px;
+    font-size: 40px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+  
+  .dynamicHeader {
+    float: left;
+    padding-left: 50px;
+    font-size: larger;
+    margin: 8px;
+    color: white;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  
+  table {
+    width: 70%;
+    margin-left: 15%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 50%;
+  }
+  
+  .homeTable,
+  td,
+  th {
+    width: 70%;
+    margin-left: 15%;
+  }
+  
+  .btn {
+    color: #FA8072;
+    border-color: #FA8072
+  }
+  
+  .filter {
+    margin-right: 15%;
+    padding: 30px;
+  }
+  

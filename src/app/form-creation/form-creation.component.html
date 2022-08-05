@@ -1,0 +1,151 @@
+<div class="row g-3 box" style="margin:20px;">
+  <form [formGroup]="form" style="width: 90%;" (ngSubmit)="onSubmit()">
+    <div class="form-floating" style="width:30%; display: inline-block;">
+      <input type="text" class="form-control" formControlName="name" id="floatingInput" placeholder="Form Name"
+        required>
+      <label for="floatingInput">Form Name</label>
+    </div>
+    <div style="display: inline-block; width:70%;">
+      <button class="btn btn-outline-primary" style="float: right; " (click)="addForm()"> <span
+          style="vertical-align: middle;"> <i class="material-icons">add_circle</i></span> Add Section</button>
+    </div>
+    <hr>
+    <div class="child" formArrayName="field" *ngFor="let o of field().controls; let formIndex = index">
+      <div class="row" [formGroupName]="formIndex">
+        <div class="col-md-4">
+          <div class="form-floating ">
+            <input type="text" class="form-control" formControlName="title" id="floatingInput"
+              placeholder="Section Name" required>
+            <label for="floatingInput">Section Name</label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <button mat-raised-button color="accent" (click)="addSectionData(formIndex)"
+            style="width: 120px; height:40px;float: right; margin-top: 7px;">Add Row</button>
+        </div>
+        <div class="col-md-4">
+          <button mat-icon-button color="warn" (click)="removeForm(formIndex)" style="float: right;  margin-top: 7px;">
+            <i class="material-icons">delete</i>
+          </button>
+        </div>
+
+        <div class="child1" formArrayName="section"
+          *ngFor="let s of section(formIndex).controls; let sectionIndex = index">
+          <div class="row" [formGroupName]="sectionIndex">
+
+            <div class="col-md-4">
+              <button mat-raised-button color="accent" (click)="addChildFieldData(formIndex,sectionIndex)"
+                style="width: 120px; height:40px;">Add Child</button>
+            </div>
+            <div class="col-md-4">
+              <button mat-icon-button color="warn" (click)="removeSectionData(formIndex,sectionIndex)">
+                <i class="material-icons">delete</i>
+              </button>
+            </div>
+
+            <div formArrayName="childField" class="controlBody"
+              *ngFor="let c of childField(formIndex,sectionIndex).controls; let childDataIndex = index">
+              <div class="row" [formGroupName]="childDataIndex">
+
+                <div class="col-md-2" style="display: inline-block;">
+                  <div class="form-floating">
+                    <select class="form-select" formControlName="name" required>
+                      <option value="Text Box">Text Box</option>
+                      <option value="Radio Button">Radio Button</option>
+                      <option value="Dropdown">Dropdown</option>
+                      <option value="Datepicker">Datepicker</option>
+                      <option value="Autocomplete">Autocomplete</option>
+                      <option value="Checkbox">Checkbox</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-2" style="display: inline-block;">
+                  <div class="form-floating ">
+                    <input type="text" class="form-control" formControlName="type" id="floatingInput"
+                      placeholder="Control type" required>
+                    <label for="floatingInput">Control Type</label>
+                  </div>
+                </div>
+
+                <div class="col-md-2" style="display: inline-block;">
+                  <div class="form-floating ">
+                    <input type="text" class="form-control" formControlName="title" placeholder="Title"
+                      id="floatingInput" required>
+                    <label for="floatingInput">Title</label>
+                  </div>
+                </div>
+
+                <div class="col-md-2" style="display: inline-block;">
+                  <div class="form-floating ">
+                    <input type="text" class="form-control" formControlName="minLength" placeholder="Min Length"
+                      id="floatingInput" value="">
+                    <label for="floatingInput">&nbsp; &nbsp;Min Length</label>
+                  </div>
+                </div>
+
+                <div class="col-md-2" style="display: inline-block;">
+                  <div class="form-floating ">
+                    <input type="text" class="form-control" formControlName="maxLength" placeholder="Max Length"
+                      id="floatingInput" value="">
+                    <label for="floatingInput">&nbsp; Max Length</label>
+                  </div>
+                </div>
+
+                <div class="col-md-1 mt-2" style="display: inline-block; ">
+                  &nbsp; &nbsp; <i class="material-icons"
+                    (click)="addFormWidgetData(formIndex,sectionIndex,childDataIndex)">add_box</i>Widgets
+                </div>
+
+                <div class="col-md-1 mt-2" style="display: inline-block;">
+                  <button mat-icon-button color="warn">
+                    <i class="material-icons" (click)="removeChildFieldData(formIndex,sectionIndex,childDataIndex)">delete</i>
+                  </button>
+                </div>
+
+                <div formArrayName="widgetData">
+
+                  <div
+                    *ngFor="let advance of formWidgetData(formIndex,sectionIndex,childDataIndex).controls; let widgetDataIndex=index">
+                    <div class="row" [formGroupName]="widgetDataIndex" style="margin: 15px;">
+
+                      <div class="col-md-3" style="display: inline-block;">
+                        <div class="form-floating ">
+                          <input type="text" class="form-control" formControlName="title" placeholder="Option Title"
+                            id="floatingInput" required>
+                          <label for="floatingInput">Option Title</label>
+                        </div>
+                      </div>
+
+                      <div class="col-md-3" style="display: inline-block;">
+                        <div class="form-floating ">
+                          <input type="text" class="form-control" formControlName="value" placeholder="Option Name"
+                            id="floatingInput" required>
+                          <label for="floatingInput">Option Value</label>
+                        </div>
+                      </div>
+
+                      <div class="col-md-3 mt-3" style="display: inline-block;">
+                        <button mat-icon-button color="warn">
+                          <i class="material-icons"
+                            (click)="removeFormWidgetData(formIndex,sectionIndex,childDataIndex,widgetDataIndex)">delete</i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <br />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-success" style="float: right; margin-right: 20px;"
+      (click)="onSave()">Save</button>
+    <button class="btn btn-primary" style="float: right; margin-right: 20px;" (click)="onPreview()">Preview</button>
+
+  </form>
+</div>
