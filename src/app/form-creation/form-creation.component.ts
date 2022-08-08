@@ -128,6 +128,7 @@ export class FormCreationComponent implements OnInit {
   onSave(){
     this.http.post<any>("http://localhost:3000/posts", this.result).subscribe((res) => {
       console.log(res);
+      this.router.navigate(['formGenerate'])
     })
     this.form.reset();
 
@@ -136,11 +137,11 @@ export class FormCreationComponent implements OnInit {
   onPreview() {
     this.result = this.form.value;
     console.log(this.result);
-    this.http.post<any>("https://4a1c-103-208-69-135.in.ngrok.io/dynamicform/createform", this.result).subscribe((res) => {
-      console.log(res);
-    })
-    this.shared.sendPreviewFormData(this.result);
-    this.router.navigate(['form'])
+    // this.http.post<any>("https://4a1c-103-208-69-135.in.ngrok.io/dynamicform/createform", this.result).subscribe((res) => {
+    //   console.log(res);
+    // })
+    // this.shared.sendPreviewFormData(this.result);
+    this.router.navigate(['formPreview'])
   }
 
 }
