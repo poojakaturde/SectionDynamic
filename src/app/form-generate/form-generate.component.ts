@@ -24,12 +24,10 @@ export class FormGenerateComponent implements OnInit {
   selectedForm: any;
   formId: any;
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder, private router: Router, private shared: SharedService) {
-    this.getFormList();
+  constructor(private http: HttpClient, private formBuilder: FormBuilder, private shared: SharedService) {
   }
 
   ngOnInit(): void {
-    this.getFormList();
     this.formId = this.shared.getNextFormId();
     this.getSelectedForm();
     this.submitForm = this.formBuilder.group({});
@@ -37,263 +35,140 @@ export class FormGenerateComponent implements OnInit {
 
   formValidation() {
     const group: any = {};
-    for (var list of this.formData) {
-      for (var l of list.section) {
-        for (var f of l.childField) {
-          if (f.type == 'EDIT_TEXT') {
-
-            group[f.title] = new FormControl(f.title || '', [
-              Validators.required,
-            ]);
-
-          } else if (f.type == 'EDIT_TEXT_PHONE') {
-
-            group[f.title] = new FormControl(f.title || '', [
-              Validators.required,
-            ]);
-
-
-          } else if (f.type == 'AUTOCOMPLETE') {
-
-            group[f.title] = new FormControl(f.title || '', [
-              Validators.required,
-            ]);
-
-          } else if (f.type == 'DROPDOWN') {
-
-            group[f.title] = new FormControl(f.title || '', [
-              Validators.required,
-            ]);
-
-          } else if (f.type == 'RADIO') {
-
-            group[f.title] = new FormControl(false, Validators.required);
-          } else if (f.type == 'DATE_PICKER') {
-
-            group[f.title] = new FormControl(false, Validators.required);
+    for (var list of this.formData1.sections) {
+      for (var subSec of list.subSection) {
+        for (var l of subSec.rows) {
+          for (var f of l.fields) {
+            if (f.type == 'EDIT_TEXT') {
+              if (f.required) {
+                group[f.title] = new FormControl(f.title);
+              }
+              else {
+                group[f.title] = new FormControl();
+              }
+            } else if (f.type == 'EDIT_TEXT_PHONE') {
+              if (f.required) {
+                group[f.title] = new FormControl(f.title || '', [
+                  Validators.required, Validators.minLength(f.minLength), Validators.maxLength(f.maxLength), Validators.pattern(f.validationType.regex)
+                ]);
+              }
+              else {
+                group[f.title] = new FormControl();
+              }
+            } else if (f.type == 'AUTOCOMPLETE') {
+              if (f.required) {
+                group[f.title] = new FormControl(f.title || '', [
+                  Validators.required, Validators.pattern(f.validationType.regex)
+                ]);
+              }
+              else {
+                group[f.title] = new FormControl();
+              }
+            } else if (f.type == 'DROPDOWN') {
+              if (f.required) {
+                group[f.title] = new FormControl(f.title || '', [
+                  Validators.required, Validators.pattern(f.validationType.regex)
+                ]);
+              }
+              else {
+                group[f.title] = new FormControl();
+              }
+            } else if (f.type == 'RADIO') {
+              if (f.required) {
+                group[f.title] = new FormControl(false, [
+                  Validators.required
+                ]);
+              }
+              else {
+                group[f.title] = new FormControl(false);
+              }
+            } else if (f.type == 'DATE_PICKER') {
+              if (f.required) {
+                group[f.title] = new FormControl(f.title || '', [
+                  Validators.required
+                ]);
+              }
+              else {
+                group[f.title] = new FormControl();
+              }
+            } else if (f.type == 'CHECKBOX') {
+              if (f.required) {
+                group[f.title] = new FormControl(Validators.required);
+              }
+              else {
+                group[f.title] = new FormControl();
+              }
+            }
           }
         }
       }
     }
-
-    this.submitForm = new FormGroup(group)
-  }
-
-  getFormList() {
-    this.http.get("http://localhost:3000/posts").subscribe((res) => {
-      this.formList = res;
-    })
+    this.submitForm = new FormGroup(group);
   }
 
   getSelectedForm() {
     this.http.get("http://localhost:3000/posts/" + "1").subscribe((res) => {
       this.formData1 = res;
-      this.formData = this.formData1.field;
-      console.log(this.formData)
       this.formValidation();
     })
 
   }
 
+
   onSubmit() {
 
     this.result = this.submitForm.value;
+    console.log(this.result);
     this.submitFormData();
-    this.getControls();
-    this.result1 = this.sampleForm.value;
-    console.log(this.result1)
+    console.log(this.result1);
     this.postSubmitForm();
+
   }
+
 
   postSubmitForm() {
 
-    this.http.post<any>("http://localhost:3000/comments", this.result1).subscribe((res) => {
-      console.log(res);
-    })
+    const sectionChildMap: any = {};
+    const subSectionMap: any = {};
+    var childItem: any = {};
+    let keys = Array.from(this.result1.keys())
+    for (var key of keys) {
+      var name = String(key)
+      var Temp = this.result1.get(key);
+      let subKeys = Array.from(Temp.keys())
+      for (var subKey of subKeys) {
+        var subName = String(subKey)
+        var Temp1 = Temp.get(subKey)
+        childItem = {};
+        Temp1.forEach((val: string, key: string) => {
+          childItem[key] = val;
+        })
+        subSectionMap[subName] = childItem
+      }
+      sectionChildMap[name] = subSectionMap;
+    }
+
+    console.log(sectionChildMap)
   }
 
   submitFormData() {
-    this.sampleForm = this.formBuilder.group({
-      formName: this.formData1.name,
-      status: "ENABLED",
-      submittedBy: "Pooja Katurde",
-      field: this.formBuilder.array([])
-    });
-  }
+    let childItem = new Map<string, string>();
+    let subSecItem = new Map<string, Map<string, string>>();
+    let sectionMap = new Map<string, Map<string, Map<string, string>>>();
 
-  field(): FormArray {
-    return this.sampleForm.get('field') as FormArray;
-  }
-
-  section(formIndex: number): FormArray {
-    return this.field()
-      .at(formIndex)
-      .get('section') as FormArray;
-  }
-
-  newSection(): FormGroup {
-    return this.formBuilder.group({
-      title: "",
-      childField: this.formBuilder.array([]),
-      widgetData: this.formBuilder.array([]),
-    });
-  }
-
- childField(formIndex: number, sectionIndex: number): FormArray {
-    return this.section(formIndex)
-      .at(sectionIndex)
-      .get('childField') as FormArray;
-  }
-
-  getControls() {
-
-    var i = 0;
-   
-    const group: any = {};
-    const group1: any = {};
-    const group2: any = {};
-
-    for (var list of this.formData) {
-      if (list.title != null) {
-        group["title"] = new FormControl(list.title || list.title, [Validators.required,]);
-        group["row"] = new FormControl(list.row || list.row, [Validators.required,]);
-        group["type"] = new FormControl(list.type || list.type, [Validators.required,]);
-        group["section"] = new FormArray([]);
+    for (var list of this.formData1.sections) {
+      for (var subSec of list.subSection) {
+        childItem = new Map<string, string>();
+        for (var row of subSec.rows) {
+          for (var fields of row.fields) {
+            childItem.set(fields.title, this.result[fields.title])
+          }
+        }
+        subSecItem.set(subSec.subSectionTitle, childItem)
       }
-      this.sentForm = new FormGroup(group)
-      this.field().push(this.sentForm);
-      for (var l of list.section) {
-        this.section(i).push(this.newSection())
-        console.log(l)
-        var j = 0;
-        for (var f of l.childField) {
-
-          if (f.type == 'EDIT_TEXT') {
-            group1["checked"] = new FormControl("" || true, [Validators.required,]);
-            group1["value"] = new FormControl("" || this.result[f.title], [Validators.required,]);
-            group1["type"] = new FormControl("" || f.type, [Validators.required,]);
-            group1["title"] = new FormControl("" || f.title, [Validators.required,]);
-            group1["name"] = new FormControl("" || f.name, [Validators.required,]);
-            group1["enteredValue"] = new FormControl("" || this.result[f.title], [Validators.required,]);
-            group1["row"] = new FormControl("" || true, [Validators.required,]);
-            group1["minLength"] = new FormControl("" || f.minLength, [Validators.required,]);
-            group1["maxLength"] = new FormControl("" || f.maxLength, [Validators.required,]);
-            group1["childField"] = new FormArray([]);
-            group1["widgetData"] = new FormArray([]);
-          }
-
-          if (f.type == 'EDIT_TEXT_PHONE') {
-            group1["checked"] = new FormControl("" || true, [Validators.required,]);
-            group1["value"] = new FormControl("" || this.result[f.title], [Validators.required,]);
-            group1["type"] = new FormControl("" || f.type, [Validators.required,]);
-            group1["title"] = new FormControl("" || f.title, [Validators.required,]);
-            group1["name"] = new FormControl("" || f.name, [Validators.required,]);
-            group1["enteredValue"] = new FormControl("" || this.result[f.title], [Validators.required,]);
-            group1["row"] = new FormControl("" || true, [Validators.required,]);
-            group1["minLength"] = new FormControl("" || f.minLength, [Validators.required,]);
-            group1["maxLength"] = new FormControl("" || f.maxLength, [Validators.required,]);
-            group1["childField"] = new FormArray([]);
-            group1["widgetData"] = new FormArray([]);
-          }
-
-          if (f.type == 'DROPDOWN') {
-            group1["checked"] = new FormControl("" || true, [Validators.required,]);
-            group1["value"] = new FormControl("" || this.result[f.title], [Validators.required,]);
-            group1["type"] = new FormControl("" || f.type, [Validators.required,]);
-            group1["title"] = new FormControl("" || f.title, [Validators.required,]);
-            group1["name"] = new FormControl("" || f.name, [Validators.required,]);
-            group1["enteredValue"] = new FormControl("" || this.result[f.title], [Validators.required,]);
-            group1["row"] = new FormControl("" || true, [Validators.required,]);
-            group1["minLength"] = new FormControl("" || f.minLength, [Validators.required,]);
-            group1["maxLength"] = new FormControl("" || f.maxLength, [Validators.required,]);
-            group1["childField"] = new FormArray([]);
-            group1["widgetData"] = new FormArray([]);
-            for (var w of f.widgetData) {
-              group2["title"] = new FormControl("" || w.title, [Validators.required,]);
-              group2["value"] = new FormControl("" || w.value, [Validators.required,]);
-              if (w.title == this.result[f.title]) {
-                group2["selected"] = new FormControl("" || true, [Validators.required,]);
-              }
-              else {
-                group2["selected"] = new FormControl("" || w.selected, [Validators.required,]);
-              }
-              this.widgetDataForm = new FormGroup(group2)
-              group1["widgetData"].push(this.widgetDataForm)
-            }
-          }
-
-          if (f.type == 'AUTOCOMPLETE') {
-            group1["checked"] = new FormControl("" || true, [Validators.required,]);
-            group1["value"] = new FormControl("" || this.result[f.title], [Validators.required,]);
-            group1["type"] = new FormControl("" || f.type, [Validators.required,]);
-            group1["title"] = new FormControl("" || f.title, [Validators.required,]);
-            group1["name"] = new FormControl("" || f.name, [Validators.required,]);
-            group1["enteredValue"] = new FormControl("" || this.result[f.title], [Validators.required,]);
-            group1["row"] = new FormControl("" || true, [Validators.required,]);
-            group1["minLength"] = new FormControl("" || f.minLength, [Validators.required,]);
-            group1["maxLength"] = new FormControl("" || f.maxLength, [Validators.required,]);
-            group1["childField"] = new FormArray([]);
-            group1["widgetData"] = new FormArray([]);
-            for (var w of f.widgetData) {
-              group2["title"] = new FormControl("" || w.title, [Validators.required,]);
-              group2["value"] = new FormControl("" || w.value, [Validators.required,])
-              if (w.title == this.result[f.title]) {
-                group2["selected"] = new FormControl("" || true, [Validators.required,]);
-              }
-              else {
-                group2["selected"] = new FormControl("" || w.selected, [Validators.required,]);
-              }
-              this.widgetDataForm = new FormGroup(group2)
-              group1["widgetData"].push(this.widgetDataForm)
-            }
-          }
-          if (f.type == 'DATE_PICKER') {
-            group1["checked"] = new FormControl("" || true, [Validators.required,]);
-            group1["value"] = new FormControl("" || new Date(this.result[f.title]), [Validators.required,]);
-            group1["type"] = new FormControl("" || f.type, [Validators.required,]);
-            group1["title"] = new FormControl("" || f.title, [Validators.required,]);
-            group1["name"] = new FormControl("" || f.name, [Validators.required,]);
-            group1["enteredValue"] = new FormControl("" || this.result[f.title], [Validators.required,]);
-            group1["row"] = new FormControl("" || true, [Validators.required,]);
-            group1["minLength"] = new FormControl("" || f.minLength, [Validators.required,]);
-            group1["maxLength"] = new FormControl("" || f.maxLength, [Validators.required,]);
-            group1["childField"] = new FormArray([]);
-            group1["widgetData"] = new FormArray([]);
-          }
-
-          if (f.type == 'RADIO') {
-            group1["checked"] = new FormControl("" || true, [Validators.required,]);
-            group1["value"] = new FormControl("" || this.result[f.title], [Validators.required,]);
-            group1["type"] = new FormControl("" || f.type, [Validators.required,]);
-            group1["title"] = new FormControl("" || f.title, [Validators.required,]);
-            group1["name"] = new FormControl("" || f.name, [Validators.required,]);
-            group1["enteredValue"] = new FormControl("" || this.result[f.title], [Validators.required,]);
-            group1["row"] = new FormControl("" || true, [Validators.required,]);
-            group1["minLength"] = new FormControl("" || f.minLength, [Validators.required,]);
-            group1["maxLength"] = new FormControl("" || f.maxLength, [Validators.required,]);
-            group1["childField"] = new FormArray([]);
-            group1["widgetData"] = new FormArray([]);
-            for (var w of f.widgetData) {
-              group2["title"] = new FormControl("" || w.title, [Validators.required,]);
-              group2["value"] = new FormControl("" || w.value, [Validators.required,])
-              if (w.title == this.result[f.title]) {
-                group2["selected"] = new FormControl("" || true, [Validators.required,]);
-              }
-              else {
-                group2["selected"] = new FormControl("" || w.selected, [Validators.required,]);
-              }
-              this.widgetDataForm = new FormGroup(group2)
-              group1["widgetData"].push(this.widgetDataForm)
-            }
-          }
-
-          this.sendForm = new FormGroup(group1)
-          this.childField(i,j).push(this.sendForm);
-        } 
-     
-      }
-      
+      sectionMap.set(list.sectionTitle, subSecItem)
+      this.result1 = sectionMap;
     }
-
   }
+
 }

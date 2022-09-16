@@ -1,32 +1,12 @@
-.box{
-    background-color: rgb(244, 244, 244);
-    border-radius: 15px;
-    padding: 20px;
-    justify-content: center;
-    margin: 30px;
-}
-.header{
-  background-color: rgb(246, 178, 54);
-  height: 70px;
-  text-align: center;
-  padding-top: 20px;
-  font-size: 40px;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+.formRender {
+  display: inline-block;
+  padding : 0.6%;
 }
 
 .mat-radio-button {
-    margin: 5px;
-  }
+  margin: 1%;
+}
 
 .radioDiv {
-  width: 325px;
-}
-
-.formRender {
-  padding: 15px; 
-  display: inline-block;
-}
-
-.check{
-  display:inline;
+  padding-left: 10%;
 }

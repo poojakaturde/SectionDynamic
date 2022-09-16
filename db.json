@@ -1,303 +1,112 @@
 {
   "posts": [
     {
-      "name": "Todo Form",
-      "status": "ENABLED",
-      "field": [
+      "name": "Doctor Form",
+      "eligibility": false,
+      "nextFormId": "",
+      "status": "enabled",
+      "sections": [
         {
-          "row": true,
-          "section": [
+          "sectionTitle": "Personal Information",
+          "subSection": [
             {
-              "title": "",
-              "childField": [
+              "subSectionTitle": "Basic Details",
+              "rows": [
                 {
-                  "name": "Text Box",
-                  "type": "EDIT_TEXT",
-                  "title": "Firstname",
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "value": null,
-                  "enteredValue": null,
-                  "widgetData": [],
-                  "checked": false,
-                  "childField": null
+                  "fields": [
+                    {
+                      "type": "EDIT_TEXT",
+                      "title": "Name",
+                      "minLength": 0,
+                      "maxLength": 0,
+                      "validationType": null,
+                      "required": false,
+                      "row": false,
+                      "childField": null,
+                      "widgetData": []
+                    },
+                    {
+                      "type": "EDIT_TEXT",
+                      "title": "Email",
+                      "minLength": 0,
+                      "maxLength": 0,
+                      "validationType": null,
+                      "required": false,
+                      "row": false,
+                      "childField": null,
+                      "widgetData": []
+                    }
+                  ]
                 },
                 {
-                  "name": "Text Box",
-                  "type": "EDIT_TEXT",
-                  "title": "Lastname",
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "value": null,
-                  "enteredValue": null,
-                  "widgetData": [],
-                  "checked": false,
-                  "childField": null
-                },
-                {
-                  "name": "Text Box",
-                  "type": "EDIT_TEXT_PHONE",
-                  "title": "Contact No",
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "value": null,
-                  "enteredValue": null,
-                  "widgetData": [],
-                  "checked": false,
-                  "childField": null
+                  "fields": [
+                    {
+                      "type": "DATE_PICKER",
+                      "title": "DOB",
+                      "minLength": 0,
+                      "maxLength": 0,
+                      "validationType": null,
+                      "required": false,
+                      "row": false,
+                      "childField": null,
+                      "widgetData": []
+                    },
+                    {
+                      "type": "EDIT_TEXT_PHONE",
+                      "title": "Contact",
+                      "minLength": 0,
+                      "maxLength": 0,
+                      "validationType": null,
+                      "required": false,
+                      "row": false,
+                      "childField": null,
+                      "widgetData": []
+                    }
+                  ]
                 }
-              ],
-              "widgetData": []
+              ]
             },
             {
-              "title": "",
-              "childField": [
+              "subSectionTitle": "Address Details",
+              "rows": [
                 {
-                  "name": "Datepicker",
-                  "type": "DATE_PICKER",
-                  "title": "Date of Birth",
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "value": null,
-                  "enteredValue": null,
-                  "widgetData": [],
-                  "checked": false,
-                  "childField": null
-                },
-                {
-                  "name": "Radio Button",
-                  "type": "RADIO",
-                  "title": "Gender",
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "value": null,
-                  "enteredValue": null,
-                  "widgetData": [
+                  "fields": [
                     {
-                      "title": "Male",
-                      "value": "Male",
-                      "isSelected": false
+                      "type": "EDIT_TEXT",
+                      "title": "Address",
+                      "minLength": 0,
+                      "maxLength": 0,
+                      "validationType": null,
+                      "required": false,
+                      "row": false,
+                      "childField": null,
+                      "widgetData": []
                     },
                     {
-                      "title": "Female",
-                      "value": "Female",
-                      "isSelected": false
+                      "type": "DROPDOWN",
+                      "title": "City",
+                      "minLength": 0,
+                      "maxLength": 0,
+                      "validationType": null,
+                      "required": false,
+                      "row": false,
+                      "childField": null,
+                      "widgetData": [
+                        {
+                          "title": "Pune",
+                          "value": "Pune",
+                          "isSelected": false
+                        }
+                      ]
                     }
-                  ],
-                  "checked": false,
-                  "childField": null
+                  ]
                 }
-              ],
-              "widgetData": []
+              ]
             }
-          ],
-          "type": "ROW_TYPE",
-          "title": "Personal Information"
-        },
-        {
-          "row": true,
-          "section": [
-            {
-              "title": "",
-              "childField": [
-                {
-                  "name": "Text Box",
-                  "type": "EDIT_TEXT",
-                  "title": "House no / Building Name",
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "value": null,
-                  "enteredValue": null,
-                  "widgetData": [],
-                  "checked": false,
-                  "childField": null
-                },
-                {
-                  "name": "Dropdown",
-                  "type": "DROPDOWN",
-                  "title": "City",
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "value": null,
-                  "enteredValue": null,
-                  "widgetData": [
-                    {
-                      "title": "Pune",
-                      "value": "Pune",
-                      "isSelected": false
-                    },
-                    {
-                      "title": "Mumbai",
-                      "value": "Mumbai",
-                      "isSelected": false
-                    }
-                  ],
-                  "checked": false,
-                  "childField": null
-                }
-              ],
-              "widgetData": []
-            }
-          ],
-          "type": "ROW_TYPE",
-          "title": "Address Information"
+          ]
         }
       ],
       "id": 1
-    }
-  ],
-  "comments": [
-    {
-      "formName": "Todo Form",
-      "status": "ENABLED",
-      "submittedBy": "Pooja Katurde",
-      "field": [
-        {
-          "title": "Personal Information",
-          "row": true,
-          "type": "ROW_TYPE",
-          "section": [
-            {
-              "title": "",
-              "childField": [
-                {
-                  "checked": true,
-                  "value": "Pooja",
-                  "type": "EDIT_TEXT",
-                  "title": "Firstname",
-                  "name": "Text Box",
-                  "enteredValue": "Pooja",
-                  "row": true,
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "childField": [],
-                  "widgetData": []
-                },
-                {
-                  "checked": true,
-                  "value": "Katurde",
-                  "type": "EDIT_TEXT",
-                  "title": "Lastname",
-                  "name": "Text Box",
-                  "enteredValue": "Katurde",
-                  "row": true,
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "childField": [],
-                  "widgetData": []
-                },
-                {
-                  "checked": true,
-                  "value": "7350207986",
-                  "type": "EDIT_TEXT_PHONE",
-                  "title": "Contact No",
-                  "name": "Text Box",
-                  "enteredValue": "7350207986",
-                  "row": true,
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "childField": [],
-                  "widgetData": []
-                },
-                {
-                  "checked": true,
-                  "value": "2022-08-11T18:30:00.000Z",
-                  "type": "DATE_PICKER",
-                  "title": "Date of Birth",
-                  "name": "Datepicker",
-                  "enteredValue": "2022-08-11T18:30:00.000Z",
-                  "row": true,
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "childField": [],
-                  "widgetData": []
-                },
-                {
-                  "checked": true,
-                  "value": "Female",
-                  "type": "RADIO",
-                  "title": "Gender",
-                  "name": "Radio Button",
-                  "enteredValue": "Female",
-                  "row": true,
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "childField": [],
-                  "widgetData": [
-                    {
-                      "title": "Male",
-                      "value": "Male",
-                      "selected": null
-                    },
-                    {
-                      "title": "Female",
-                      "value": "Female",
-                      "selected": true
-                    }
-                  ]
-                }
-              ],
-              "widgetData": []
-            },
-            {
-              "title": "",
-              "childField": [],
-              "widgetData": []
-            }
-          ]
-        },
-        {
-          "title": "Address Information",
-          "row": true,
-          "type": "ROW_TYPE",
-          "section": [
-            {
-              "title": "",
-              "childField": [
-                {
-                  "checked": true,
-                  "value": "1353",
-                  "type": "EDIT_TEXT",
-                  "title": "House no / Building Name",
-                  "name": "Text Box",
-                  "enteredValue": "1353",
-                  "row": true,
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "childField": [],
-                  "widgetData": []
-                },
-                {
-                  "checked": true,
-                  "value": "Pune",
-                  "type": "DROPDOWN",
-                  "title": "City",
-                  "name": "Dropdown",
-                  "enteredValue": "Pune",
-                  "row": true,
-                  "minLength": 0,
-                  "maxLength": 0,
-                  "childField": [],
-                  "widgetData": [
-                    {
-                      "title": "Pune",
-                      "value": "Pune",
-                      "selected": true
-                    },
-                    {
-                      "title": "Mumbai",
-                      "value": "Mumbai",
-                      "selected": null
-                    }
-                  ]
-                }
-              ],
-              "widgetData": []
-            }
-          ]
-        }
-      ],
-      "id": 3
     }
   ],
   "profile": {

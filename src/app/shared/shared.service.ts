@@ -8,6 +8,7 @@ export class SharedService {
   formPreviewData: any;
   response: any;
   formId: any;
+  formEditData:any;
   constructor() { }
 
   sendPreviewFormData(data: any) {
@@ -18,6 +19,13 @@ export class SharedService {
     return this.formPreviewData;
   }
 
+  sendEditFormData(data: any){
+    this.formEditData = data;
+  }
+
+  getEditFormData() {
+    return this.formEditData;
+  }
   sendResponse(data: any) {
     this.response = data;
   }

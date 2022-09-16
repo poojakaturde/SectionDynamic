@@ -30,6 +30,7 @@ import { MatTableModule } from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { SubmitEligibilityComponent } from './submit-eligibility/submit-eligibility.component';
+import {MatCardModule} from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +64,8 @@ import { SubmitEligibilityComponent } from './submit-eligibility/submit-eligibil
     MatButtonModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
